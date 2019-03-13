@@ -40,7 +40,7 @@ irv <- function(d) {
     
     i <- which.min(prop)
     if (sum(prop[i]==prop)>1) {
-      cat("There's a tie.")
+      cat("There's a tie for lowest ranked candidate.")
       break;
     }
     cat("Eliminating", names(d)[i], "\n\n")

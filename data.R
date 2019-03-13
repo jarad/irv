@@ -8,4 +8,4 @@ irv(ranks)
 irv(ranks[,-1]) # For second place.
 
 
-colMeans(ranks)
+round(colMeans(ranks),2)

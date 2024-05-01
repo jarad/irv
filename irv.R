@@ -26,7 +26,13 @@ read.tcsv = function(file, header=TRUE, sep=",", ...) {
 }
 
 
+#' This function will run an instant-runoff vote. 
+#' 
+#' This function will run an instant-runoff vote using a data frame of ordered
+#' choices for each candidate. 
 irv <- function(d) {
+  d <- as.matrix(d)
+  
   while(TRUE) {
     
     prop <- colMeans( d == 1)
@@ -34,16 +40,27 @@ irv <- function(d) {
     cat("\n")
     
     if (any(prop>0.5)) {
-      cat(names(d)[which(prop>0.5)], "wins!\n\n")
+      cat(colnames(d)[which(prop>0.5)], "wins!\n\n")
       break;
     }
     
     i <- which.min(prop)
     if (sum(prop[i]==prop)>1) {
-      cat("There's a tie for lowest ranked candidate.")
-      break;
+      cat("There's a tie for lowest ranked candidate.\n\n")
+      
+      if (all(prop[i] == prop)) {
+        cat("All remaining options are tied.\n\n")
+        break;
+      }
+      
+      # Try eliminating one option at a time
+      ii <- which(prop[i] == prop)
+      for (i in ii) {
+        cat(paste("Try eliminating", names(prop)[i], "\n\n"))
+        irv(rerank(d[,-i]))
+      }
     }
-    cat("Eliminating", names(d)[i], "\n\n")
+    cat("Eliminating", colnames(d)[i], "\n\n")
     d <- d[,-i]
       
     d <- rerank(d)

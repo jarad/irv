@@ -20,7 +20,7 @@ read.tcsv = function(file, header=TRUE, sep=",", ...) {
   
   x = do.call(cbind, lapply(x, .splitvar, sep=sep, n=n))
   x = apply(x, 1, paste, collapse=sep) 
-  out = read.csv(text=x, sep=sep, header=header, ...)
+  out = read.table(text=x, sep=sep, header=header, ...)
   return(out)
   
 }

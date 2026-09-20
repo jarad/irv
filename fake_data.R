@@ -10,3 +10,5 @@ colnames(ranks) <- paste("option", LETTERS[1:n_choices], sep="")
 
 write.csv(ranks, file = "test.csv", row.names = FALSE)
 write.table(t(ranks), file = "testt.csv", sep = ",", col.names = FALSE)
+
+irv(ranks)
